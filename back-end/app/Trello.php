@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trello extends Model
 {
-    //
+    protected $fillable = [
+        'name', 'email', 'password','url',
+    ];
+
 }

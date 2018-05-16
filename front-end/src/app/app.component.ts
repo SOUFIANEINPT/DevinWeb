@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgForm } from '@angular/forms';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { SendDataService } from './services/send-data.service';
 @Component({
   selector: 'app-root',
@@ -11,11 +10,11 @@ import { SendDataService } from './services/send-data.service';
 export class AppComponent {
   title = 'app';
   messgaeError={email:[],name:[],password:[]};
+myFile:File;
   constructor(private spinnerService: Ng4LoadingSpinnerService ,private sendData:SendDataService) { }
   ngOnInit() {
   }
-  Name:string; 
-myFile:File;
+  
 fileChange(files: any){
     console.log(files);
 
