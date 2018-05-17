@@ -12,6 +12,7 @@ export class AppComponent {
   title = 'app';
   messgaeError={email:[],name:[],password:[]};
 myFile:File;
+fileselect:boolean=false;
   constructor(private spinnerService: Ng4LoadingSpinnerService ,private sendData:SendDataService,
     private flashMessagesService: FlashMessagesService) { }
   ngOnInit() {
@@ -19,8 +20,8 @@ myFile:File;
   
   fileEvent($event){
     console.log( $event.target.files[0]);
-
-    this.myFile = $event.target.files[0];
+        this.fileselect=true;
+        this.myFile = $event.target.files[0];
 }
   onSignup(form: NgForm) {
     this.spinnerService.show();
@@ -38,9 +39,8 @@ myFile:File;
     formData.append("image", this.myFile,this.myFile.name);
     this.sendData.Send(formData).subscribe(data=>{
       this.spinnerService.hide();
-    this.flashMessagesService.show("Data sended"
-      , { cssClass: 'alert-secuss', timeout: 1000 });
-  });
+      this.flashMessagesService.show("Data Sended"
+        , { cssClass: 'alert-danger', timeout: 1000 });
 
     },
   error=>{
