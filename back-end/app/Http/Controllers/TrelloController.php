@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use  App\Trello;
 class TrelloController extends Controller
 {
     /**
@@ -14,6 +14,7 @@ class TrelloController extends Controller
     public function index()
     {
         //
+        dd("hi");
     }
 
     /**
@@ -24,6 +25,7 @@ class TrelloController extends Controller
     public function create()
     {
         //
+    
     }
 
     /**
@@ -35,6 +37,29 @@ class TrelloController extends Controller
     public function store(Request $request)
     {
         //
+        //dd('hi');
+   
+      // return response()->json(['data' =>$request->all()], 200, [], JSON_NUMERIC_CHECK);
+        $imageName;
+        $this->validate($request, [
+    		'name' => 'required',
+    		'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.request()->image->getClientOriginalExtension();
+
+        request()->image->move(public_path('images'), $imageName);
+        } 
+    	$trello = Trello::create([
+    		'name' => request('name'),
+    		'email' => request('email'),
+            'password' => bcrypt(request('password')),
+            'url'=>$imageName
+        ]);
+        $user->save();
+        return response()->json(201);
     }
 
     /**

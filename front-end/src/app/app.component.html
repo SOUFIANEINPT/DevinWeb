@@ -86,7 +86,7 @@
             <label for="validatedCustomFile">Select Photo</label>
             <div class="custom-file form-label-group">
               <input type="file" class="custom-file-input" id="validatedCustomFile" accept="image/*" 
-              #fileupload [(ngModel)]="myFile" name="myFile" (change)="fileChange(fileupload.files)" required>
+              #fileupload name="myFile" (change)="fileEvent($event)" required>
               <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
               <div class="invalid-feedback">Photo not Select</div>
             </div>

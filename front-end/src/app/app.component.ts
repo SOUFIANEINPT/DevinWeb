@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgForm } from '@angular/forms';
 import { SendDataService } from './services/send-data.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,14 +12,15 @@ export class AppComponent {
   title = 'app';
   messgaeError={email:[],name:[],password:[]};
 myFile:File;
-  constructor(private spinnerService: Ng4LoadingSpinnerService ,private sendData:SendDataService) { }
+  constructor(private spinnerService: Ng4LoadingSpinnerService ,private sendData:SendDataService,
+    private flashMessagesService: FlashMessagesService) { }
   ngOnInit() {
   }
   
-fileChange(files: any){
-    console.log(files);
+  fileEvent($event){
+    console.log( $event.target.files[0]);
 
-    this.myFile = files[0].nativeElement;
+    this.myFile = $event.target.files[0];
 }
   onSignup(form: NgForm) {
     this.spinnerService.show();
@@ -30,16 +32,24 @@ fileChange(files: any){
       return false;
   }
     let formData = new FormData();
-    formData.append("Name", email);
-    formData.append("Password", password);
+    formData.append("email", email);
+    formData.append("password", password);
     formData.append("username", username);
-    formData.append("MyFile", this.myFile);
+    formData.append("image", this.myFile,this.myFile.name);
     this.sendData.Send(formData).subscribe(data=>{
-      console.log("data",data)
+      this.spinnerService.hide();
+    this.flashMessagesService.show("Data sended"
+      , { cssClass: 'alert-secuss', timeout: 1000 });
+  });
 
     },
   error=>{
+    this.spinnerService.hide(); 
+    console.log("error",error.error)
     
+    //this.messgaeError=error.error.errors;
+    this.flashMessagesService.show(error.error.message
+      , { cssClass: 'alert-danger', timeout: 1000 });
   });
     
   }
