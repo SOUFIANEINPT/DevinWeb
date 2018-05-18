@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+  <div class="container">
+  <flash-message class="myCustomClass"></flash-message>
+  </div>
   <div class="formulaire">      
   <div class="panel panel-default"> 
       <div class="panel-heading">
@@ -23,7 +26,7 @@
       <div class="text-left">
       <label>Email</label>
       </div>
-      <input type="email" name="email"  class="form-control" placeholder="Email" v-validate="'required|email'" v-model="email">
+      <input type="email" name="email" autofocus  class="form-control" placeholder="Email" v-validate="'required|email'" v-model="email">
       <div class="text-left">
       <div class="alert alert-danger" v-if="errors.has('email')">{{errors.first('email')}}</div>
       </div>
@@ -32,7 +35,7 @@
       <div class="text-left">
       <label>password</label>
       </div>
-      <input type="password" name="password"  class="form-control" placeholder="password" v-validate="'required|min:6'" v-model="password">
+      <input type="password" name="password" autofocus  class="form-control" placeholder="password" v-validate="'required|min:6'" v-model="password">
       <div class="text-left">
       <div class="alert alert-danger" v-if="errors.has('password')">{{errors.first('password')}}</div>
       </div>
@@ -41,7 +44,7 @@
       <label>Select Photo</label>
       </div>
     <div class="custom-file form-label-group">
-    <input type="file" class="custom-file-input" id="validatedCustomFile" accept="image/*" 
+    <input autofocus type="file" class="custom-file-input" id="validatedCustomFile" accept="image/*" 
                name="myFile" @change="onFileChanged" v-validate="'required'">
               <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
               <div class="invalid-feedback">Photo not Select</div>
@@ -55,6 +58,7 @@
 
 <script>
 import axios from 'axios'
+require('vue-flash-message/dist/vue-flash-message.min.css');
 export default {
   name: 'app',
   data() {
@@ -84,10 +88,16 @@ export default {
     },
   )
     .then(response => {
-      console.log("data",response)
+      console.log("data sended",response)
+     this.flash('data sended', 'success', {
+  timeout: 2000,
+});
     })
     .catch(e => {
        console.log("error",e)
+       this.flash('Validation failed', 'error', {
+  timeout: 2000,
+});
     })
       }
     }

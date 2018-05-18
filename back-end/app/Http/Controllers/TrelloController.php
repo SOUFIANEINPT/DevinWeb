@@ -39,7 +39,7 @@ class TrelloController extends Controller
         //
         //dd('hi');
    
-      // return response()->json(['data' =>$request->all()], 200, [], JSON_NUMERIC_CHECK);
+       return response()->json(['data' =>$request->all()], 200, [], JSON_NUMERIC_CHECK);
         $imageName;
         $this->validate($request, [
     		'name' => 'required',
