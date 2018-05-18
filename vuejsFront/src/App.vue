@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-  <div class="container">
+  <div style="margin-top:40px" class="container">
+  <div class="text-left">
   <flash-message class="myCustomClass"></flash-message>
+  </div>
   </div>
   <div class="formulaire">      
   <div class="panel panel-default"> 
@@ -26,7 +28,7 @@
       <div class="text-left">
       <label>Email</label>
       </div>
-      <input type="email" name="email" autofocus  class="form-control" placeholder="Email" v-validate="'required|email'" v-model="email">
+      <input type="email" name="email"   class="form-control" placeholder="Email" v-validate="'required|email'" v-model="email">
       <div class="text-left">
       <div class="alert alert-danger" v-if="errors.has('email')">{{errors.first('email')}}</div>
       </div>
@@ -44,12 +46,12 @@
       <label>Select Photo</label>
       </div>
     <div class="custom-file form-label-group">
-    <input autofocus type="file" class="custom-file-input" id="validatedCustomFile" accept="image/*" 
+    <input  type="file" class="custom-file-input" id="validatedCustomFile" accept="image/*" 
                name="myFile" @change="onFileChanged" v-validate="'required'">
               <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
               <div class="invalid-feedback">Photo not Select</div>
     </div>
-    <button type="submit" :disabled="errors.any()" class="btn btn-lg btn-primary btn-block">Send</button>
+    <button type="submit" :disabled="errors.any()||(username==''||email==''||password=='')" class="btn btn-lg btn-primary btn-block">Send</button>
   </form>
   </div>
   </div>
