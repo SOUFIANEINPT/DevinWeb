@@ -24,23 +24,27 @@ fileselect:boolean=false;
         this.myFile = $event.target.files[0];
 }
   onSignup(form: NgForm) {
-    this.spinnerService.show();
     const email = form.value.email;
     const password = form.value.password;
     const username= form.value.username;
     if (!this.validateFile(this.myFile.name)) {
       console.log('Selected file format is not supported');
+      this.flashMessagesService.show('Selected file format is not supported'
+        , { cssClass: 'alert-danger', timeout: 1000 });
       return false;
   }
+  else
+  {
     let formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("username", username);
+    formData.append("name", username);
     formData.append("image", this.myFile,this.myFile.name);
     this.sendData.Send(formData).subscribe(data=>{
       this.spinnerService.hide();
+      console.log("data",data)
       this.flashMessagesService.show("Data Sended"
-        , { cssClass: 'alert-danger', timeout: 1000 });
+        , { cssClass: 'alert-success', timeout: 1000 });
 
     },
   error=>{
@@ -51,7 +55,7 @@ fileselect:boolean=false;
     this.flashMessagesService.show(error.error.message
       , { cssClass: 'alert-danger', timeout: 1000 });
   });
-    
+} 
   }
   validateFile(name: String) {
     var ext = name.substring(name.lastIndexOf('.') + 1);

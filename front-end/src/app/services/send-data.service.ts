@@ -7,7 +7,7 @@ export class SendDataService {
   constructor(private http:HttpClient) { }
   Send(Data:FormData) {
     console.log(Data)
-    let headers =  new HttpHeaders();
+    let headers =  new HttpHeaders().delete('Content-Type');
     headers.append('Accept', 'application/json');
     return  this.http.post('http://localhost:8000/api/trello',Data,{
         observe: 'body',

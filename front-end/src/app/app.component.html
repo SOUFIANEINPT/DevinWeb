@@ -87,12 +87,12 @@
             <div class="custom-file form-label-group">
               <input type="file" class="custom-file-input" id="validatedCustomFile" accept="image/*" 
               #fileupload name="myFile" (change)="fileEvent($event)" required>
-              <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+              <label class="custom-file-label" for="validatedCustomFile" >Choose file...</label>
               <div class="invalid-feedback">Photo not Select</div>
             </div>
             <br>
             <br>
-            <button class="btn btn-lg btn-primary btn-block"  type="submit" [disabled]="!f.valid||(passwordConfirmation.value!=password.value)&&fileselect">Send</button>
+            <button class="btn btn-lg btn-primary btn-block"   type="submit" [disabled]="!f.valid||(passwordConfirmation.value!=password.value)||!fileselect">Send</button>
        </form>
 </div>
 </div>
