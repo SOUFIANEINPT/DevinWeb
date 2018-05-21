@@ -40,25 +40,27 @@ class TrelloController extends Controller
         //dd('hi');
    
       // return response()->json(['data' =>$request->all()], 200, [], JSON_NUMERIC_CHECK);
-        $imageName;
         $this->validate($request, [
     		'name' => 'required',
-    		'email' => 'required|email|unique:users,email',
+    		'email' => 'required|email|unique:trellos,email',
             'password' => 'required|min:6',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
+        $trello = Trello::create([
+    		'name' => request('name'),
+    		'email' => request('email'),
+            'password' => bcrypt(request('password')),
+        ]);
+        $trello->save();
         if ($request->hasFile('image')) {
             $imageName = time().'.'.request()->image->getClientOriginalExtension();
 
         request()->image->move(public_path('images'), $imageName);
-        } 
-    	$trello = Trello::create([
-    		'name' => request('name'),
-    		'email' => request('email'),
-            'password' => bcrypt(request('password')),
-            'url'=>$imageName
-        ]);
+        $trello->url=$imageName ;
         $trello->save();
+        } 
+    	
+        
         
         return response()->json(201);
     }

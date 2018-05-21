@@ -44,7 +44,7 @@ fileselect:boolean=false;
       this.spinnerService.hide();
       console.log("data",data)
       this.flashMessagesService.show("Data Sended"
-        , { cssClass: 'alert-success', timeout: 1000 });
+        , { cssClass: 'alert-success', timeout: 3000 });
 
     },
   error=>{
@@ -52,8 +52,9 @@ fileselect:boolean=false;
     console.log("error",error.error)
     
     //this.messgaeError=error.error.errors;
-    this.flashMessagesService.show(error.error.message
-      , { cssClass: 'alert-danger', timeout: 1000 });
+    this.flashMessagesService.show(error.error.errors
+      .email[0]
+      , { cssClass: 'alert-danger', timeout: 3000 });
   });
 } 
   }
